@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Connect | Campus Trading</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+        }
+
+        /* Navbar */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: white; }
+        .btn-success { background: var(--success); color: white; width: 100%; padding: 0.75rem;}
+
+        /* Main Container */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 5%;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Auth Section */
+        #auth-section {
+            text-align: center;
+            margin-top: 10vh;
+        }
+        
+        .auth-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            width: 300px;
+        }
+
+        /* Dashboards */
+        .dashboard-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Forms */
+        .seller-form {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        /* Product Grid */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            color: var(--text-dark);
+            border: 1px solid #d1d5db;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            height: 180px;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 3rem;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            border-top: 1px solid #f3f4f6;
+            padding-top: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">🔌 Component Connect</div>
+        <div class="nav-controls">
+            <span id="user-status" style="font-weight: 600;">Not logged in</span>
+            <button id="logout-btn" class="btn-outline hidden" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Authentication View -->
+        <section id="auth-section">
+            <h1>Welcome to Component Connect</h1>
+            <p style="color: var(--text-light); margin-top: 10px;">The hyper-local campus marketplace for engineering students.</p>
+            
+            <div class="auth-cards">
+                <div class="auth-card">
+                    <h3>👨‍🎓 I am a Junior</h3>
+                    <p style="margin: 1rem 0; color: var(--text-light);">Browse and purchase electronics, books, and components for your projects.</p>
+                    <button class="btn-primary" style="width: 100%;" onclick="login('buyer')">Login as Buyer</button>
+                </div>
+                <div class="auth-card">
+                    <h3>🧑‍🏫 I am a Senior</h3>
+                    <p style="margin: 1rem 0; color: var(--text-light);">List your old project materials, set your prices, and help out juniors.</p>
+                    <button class="btn-outline" style="width: 100%;" onclick="login('seller')">Login as Seller</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seller Dashboard -->
+        <section id="seller-dashboard" class="hidden">
+            <div class="dashboard-header">
+                <h2>Seller Dashboard</h2>
+                <p>List a new item for sale on campus</p>
+            </div>
+
+            <div class="seller-form">
+                <form id="add-product-form" onsubmit="handleAddProduct(event)">
+                    <div class="form-group">
+                        <label>Product Title</label>
+                        <input type="text" id="p-title" required placeholder="e.g., Breadboard with Jumper Wires">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="p-category">
+                            <option value="Electronics">DIY Electronics</option>
+                            <option value="Microcontrollers">Microcontrollers</option>
+                            <option value="Sensors">Sensors</option>
+                            <option value="Calculators">Calculators</option>
+                            <option value="Books">Books</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="p-price" required min="0" placeholder="e.g., 250">
+                    </div>
+                    <div class="form-group">
+                        <label>Description & Condition</label>
+                        <textarea id="p-desc" required rows="3" placeholder="Barely used, works perfectly for semester projects..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Post Product</button>
+                </form>
+            </div>
+            
+            <h3 style="margin-bottom: 1rem;">Your Listed Items</h3>
+            <div id="seller-inventory" class="product-grid"></div>
+        </section>
+
+        <!-- Buyer Dashboard -->
+        <section id="buyer-dashboard" class="hidden">
+            <div class="dashboard-header">
+                <h2>Campus Marketplace</h2>
+                <p>Find what you need from your seniors</p>
+            </div>
+
+            <div class="filters" id="filter-container">
+                <button class="filter-btn active" onclick="filterProducts('All')">All Items</button>
+                <button class="filter-btn" onclick="filterProducts('Calculators')">Calculators</button>
+                <button class="filter-btn" onclick="filterProducts('Microcontrollers')">Microcontrollers</button>
+                <button class="filter-btn" onclick="filterProducts('Sensors')">Sensors</button>
+                <button class="filter-btn" onclick="filterProducts('Books')">Books</button>
+                <button class="filter-btn" onclick="filterProducts('Electronics')">DIY Electronics</button>
+            </div>
+
+            <div id="buyer-inventory" class="product-grid">
+                <!-- Products injected by JS -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Initial Mock Data
+        let products = [
+            {
+                id: 1,
+                title: "Casio fx-991ES Scientific Calculator",
+                category: "Calculators",
+                price: 650,
+                desc: "Great condition. Ideal for complex numbers, polar conversions, and engineering math problems.",
+                emoji: "🖩",
+                seller: "Third Year CS"
+            },
+            {
+                id: 2,
+                title: "HC-SR04 Ultrasonic Distance Sensor",
+                category: "Sensors",
+                price: 80,
+                desc: "Spare sensor from a robotics project. Tested and working perfectly for obstacle avoidance.",
+                emoji: "📡",
+                seller: "Second Year IT"
+            },
+            {
+                id: 3,
+                title: "Engineering Mathematics Vol 1",
+                category: "Books",
+                price: 300,
+                desc: "Slightly highlighted but no torn pages. Crucial for first-year exams.",
+                emoji: "📚",
+                seller: "Second Year Mech"
+            },
+            {
+                id: 4,
+                title: "Arduino Uno R3 with Cable",
+                category: "Microcontrollers",
+                price: 400,
+                desc: "Original clone. Used for one semester. Comes with the blue USB cable.",
+                emoji: "🔌",
+                seller: "Final Year EXTC"
+            }
+        ];
+
+        let currentRole = null;
+        let activeFilter = 'All';
+
+        // DOM Elements
+        const authSection = document.getElementById('auth-section');
+        const sellerDash = document.getElementById('seller-dashboard');
+        const buyerDash = document.getElementById('buyer-dashboard');
+        const userStatus = document.getElementById('user-status');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        function login(role) {
+            currentRole = role;
+            authSection.classList.add('hidden');
+            logoutBtn.classList.remove('hidden');
+
+            if (role === 'seller') {
+                userStatus.textContent = "Logged in as: Senior (Seller)";
+                sellerDash.classList.remove('hidden');
+                renderProducts(); 
+            } else if (role === 'buyer') {
+                userStatus.textContent = "Logged in as: Junior (Buyer)";
+                buyerDash.classList.remove('hidden');
+                renderProducts();
+            }
+        }
+
+        function logout() {
+            currentRole = null;
+            userStatus.textContent = "Not logged in";
+            logoutBtn.classList.add('hidden');
+            sellerDash.classList.add('hidden');
+            buyerDash.classList.add('hidden');
+            authSection.classList.remove('hidden');
+        }
+
+        function getEmojiForCategory(category) {
+            const map = {
+                'Calculators': '🖩',
+                'Sensors': '📡',
+                'Books': '📚',
+                'Microcontrollers': '🔌',
+                'Electronics': '🔋'
+            };
+            return map[category] || '📦';
+        }
+
+        function handleAddProduct(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('p-title').value;
+            const category = document.getElementById('p-category').value;
+            const price = document.getElementById('p-price').value;
+            const desc = document.getElementById('p-desc').value;
+
+            const newProduct = {
+                id: Date.now(),
+                title,
+                category,
+                price: parseInt(price),
+                desc,
+                emoji: getEmojiForCategory(category),
+                seller: "You"
+            };
+
+            products.unshift(newProduct); // Add to beginning of array
+            document.getElementById('add-product-form').reset();
+            alert("Product listed successfully!");
+            renderProducts();
+        }
+
+        function filterProducts(category) {
+            activeFilter = category;
+            
+            // Update active button styling
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => {
+                if(btn.textContent.includes(category) || (category === 'All' && btn.textContent === 'All Items')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            renderProducts();
+        }
+
+        function buyProduct(id) {
+            if(confirm("Are you sure you want to purchase this item? The seller will be notified.")) {
+                // In a real app, this would trigger a backend API and payment gateway
+                products = products.filter(p => p.id !== id);
+                alert("Purchase request sent to the seller! You can collect it on campus.");
+                renderProducts();
+            }
+        }
+
+        function deleteProduct(id) {
+            if(confirm("Remove this listing?")) {
+                products = products.filter(p => p.id !== id);
+                renderProducts();
+            }
+        }
+
+        function renderProducts() {
+            const buyerContainer = document.getElementById('buyer-inventory');
+            const sellerContainer = document.getElementById('seller-inventory');
+            
+            let htmlToInject = '';
+            
+            // Filter logic for buyer view
+            let displayProducts = products;
+            if(currentRole === 'buyer' && activeFilter !== 'All') {
+                displayProducts = products.filter(p => p.category === activeFilter);
+            }
+
+            if(displayProducts.length === 0) {
+                htmlToInject = `<p style="grid-column: 1/-1; text-align: center; color: gray;">No items found in this category.</p>`;
+            }
+
+            displayProducts.forEach(product => {
+                const isSellerView = currentRole === 'seller';
+                const actionButton = isSellerView 
+                    ? `<button class="btn-outline" style="width:100%; border-color: red; color: red;" onclick="deleteProduct(${product.id})">Remove Listing</button>`
+                    : `<button class="btn-success" onclick="buyProduct(${product.id})">Buy Now</button>`;
+
+                htmlToInject += `
+                    <div class="product-card">
+                        <div class="product-img">
+                            ${product.emoji}
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">${product.category}</span>
+                            <h3 class="product-title">${product.title}</h3>
+                            <p class="product-desc">${product.desc}</p>
+                            <div class="product-footer" style="margin-bottom: 1rem;">
+                                <span class="product-price">₹${product.price}</span>
+                                <span style="font-size: 0.8rem; color: gray;">By: ${product.seller}</span>
+                            </div>
+                            ${actionButton}
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (currentRole === 'buyer') {
+                buyerContainer.innerHTML = htmlToInject;
+            } else if (currentRole === 'seller') {
+                sellerContainer.innerHTML = htmlToInject;
+            }
+        }
+    </script>
+</body>
+</html>
