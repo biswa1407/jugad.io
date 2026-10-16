@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +7,12 @@
     <title>Component Connect | Campus Trading</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg-color: #f3f4f6;
+            --primary: #4f46e5;      /* Indigo */
+            --secondary: #ec4899;    /* Pink */
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
-            --text-dark: #1f2937;
-            --text-light: #6b7280;
+            --text-dark: #0f172a;
+            --text-light: #64748b;
             --success: #10b981;
         }
 
@@ -19,18 +20,22 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Navbar */
+        /* Navbar with subtle shadow */
         header {
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
@@ -42,110 +47,208 @@
 
         .logo {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
         .nav-controls {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
         button {
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-hover); }
-        .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary); color: white; }
-        .btn-success { background: var(--success); color: white; width: 100%; padding: 0.75rem;}
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; 
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+        .btn-primary:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+        }
+        
+        .btn-outline { 
+            background: transparent; 
+            border: 2px solid var(--primary); 
+            color: var(--primary); 
+        }
+        .btn-outline:hover { 
+            background: rgba(79, 70, 229, 0.1);
+            transform: translateY(-2px);
+        }
 
-        /* Main Container */
+        .btn-success { 
+            background: var(--success); 
+            color: white; 
+            width: 100%; 
+            padding: 0.75rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+        }
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+
         main {
+            flex: 1;
+            width: 100%;
+        }
+
+        .container {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 5%;
+            margin: 0 auto;
+            padding: 2rem 5%;
         }
 
         .hidden { display: none !important; }
 
-        /* Auth Section */
+        /* Animated Gradient Auth Section */
         #auth-section {
+            min-height: calc(100vh - 70px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            padding: 2rem;
             text-align: center;
-            margin-top: 10vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .auth-title {
+            color: white;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         
+        .auth-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
         .auth-cards {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 2rem;
             flex-wrap: wrap;
+            width: 100%;
+            max-width: 800px;
         }
 
+        /* Glassmorphism Cards */
         .auth-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            width: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
         }
 
-        /* Dashboards */
+        .auth-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .auth-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
         .dashboard-header {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             text-align: center;
         }
+        
+        .dashboard-header h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        /* Forms */
+        /* Modern Form */
         .seller-form {
             background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            max-width: 500px;
-            margin: 0 auto 2rem auto;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-align: left;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
             font-size: 1rem;
+            background: #f8fafc;
+            transition: all 0.3s ease;
         }
 
-        /* Product Grid */
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        /* Styled Filter Buttons */
         .filters {
             display: flex;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.5rem;
             overflow-x: auto;
-            padding-bottom: 0.5rem;
+            padding-bottom: 1rem;
+            justify-content: center;
         }
 
         .filter-btn {
-            background: var(--card-bg);
-            color: var(--text-dark);
-            border: 1px solid #d1d5db;
+            background: white;
+            color: var(--text-light);
+            border: 2px solid #e2e8f0;
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
             white-space: nowrap;
         }
 
@@ -153,37 +256,46 @@
             background: var(--primary);
             color: white;
             border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
         }
 
+        /* High-End Product Grid */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .product-card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.02);
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
+        /* Gradient Graphic Area for Items */
         .product-img {
-            height: 180px;
-            background-color: #e5e7eb;
+            height: 200px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-light);
-            font-size: 3rem;
+            font-size: 5rem;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
         }
+        
+        .product-card:nth-child(2n) .product-img { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); }
+        .product-card:nth-child(3n) .product-img { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+        .product-card:nth-child(4n) .product-img { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
 
         .product-info {
             padding: 1.5rem;
@@ -193,130 +305,145 @@
         }
 
         .product-category {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--primary);
             text-transform: uppercase;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: 1px;
             margin-bottom: 0.5rem;
         }
 
         .product-title {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            line-height: 1.4;
         }
 
         .product-desc {
             color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
             flex-grow: 1;
+            line-height: 1.5;
         }
 
         .product-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: auto;
-            border-top: 1px solid #f3f4f6;
-            padding-top: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .product-price {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--success);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .seller-badge {
+            background: #f1f5f9;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-light);
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">🔌 Component Connect</div>
+        <div class="logo">⚡ Component Connect</div>
         <div class="nav-controls">
-            <span id="user-status" style="font-weight: 600;">Not logged in</span>
+            <span id="user-status" style="font-weight: 600; color: var(--text-light);">Not logged in</span>
             <button id="logout-btn" class="btn-outline hidden" onclick="logout()">Logout</button>
         </div>
     </header>
 
     <main>
-        <!-- Authentication View -->
+        <!-- Starting Page (High Graphics Animated Background) -->
         <section id="auth-section">
-            <h1>Welcome to Component Connect</h1>
-            <p style="color: var(--text-light); margin-top: 10px;">The hyper-local campus marketplace for engineering students.</p>
+            <h1 class="auth-title">Campus Trading Hub</h1>
+            <p class="auth-subtitle">The hyper-local marketplace to swap, buy, and sell project components.</p>
             
             <div class="auth-cards">
                 <div class="auth-card">
-                    <h3>👨‍🎓 I am a Junior</h3>
-                    <p style="margin: 1rem 0; color: var(--text-light);">Browse and purchase electronics, books, and components for your projects.</p>
-                    <button class="btn-primary" style="width: 100%;" onclick="login('buyer')">Login as Buyer</button>
+                    <h3>🛒 I am a Buyer</h3>
+                    <p style="margin: 1rem 0; color: var(--text-light); line-height: 1.6;">Looking for parts? Browse and purchase electronics, sensors, and components.</p>
+                    <button class="btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;" onclick="login('buyer')">Enter Marketplace</button>
                 </div>
                 <div class="auth-card">
-                    <h3>🧑‍🏫 I am a Senior</h3>
-                    <p style="margin: 1rem 0; color: var(--text-light);">List your old project materials, set your prices, and help out juniors.</p>
-                    <button class="btn-outline" style="width: 100%;" onclick="login('seller')">Login as Seller</button>
+                    <h3>🏷️ I am a Seller</h3>
+                    <p style="margin: 1rem 0; color: var(--text-light); line-height: 1.6;">Done with your project? List your materials, set prices, and sell them locally.</p>
+                    <button class="btn-outline" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-width: 2px;" onclick="login('seller')">Start Selling</button>
                 </div>
             </div>
         </section>
 
-        <!-- Seller Dashboard -->
-        <section id="seller-dashboard" class="hidden">
-            <div class="dashboard-header">
-                <h2>Seller Dashboard</h2>
-                <p>List a new item for sale on campus</p>
-            </div>
-
-            <div class="seller-form">
-                <form id="add-product-form" onsubmit="handleAddProduct(event)">
-                    <div class="form-group">
-                        <label>Product Title</label>
-                        <input type="text" id="p-title" required placeholder="e.g., Breadboard with Jumper Wires">
-                    </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select id="p-category">
-                            <option value="Electronics">DIY Electronics</option>
-                            <option value="Microcontrollers">Microcontrollers</option>
-                            <option value="Sensors">Sensors</option>
-                            <option value="Calculators">Calculators</option>
-                            <option value="Books">Books</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Price (₹)</label>
-                        <input type="number" id="p-price" required min="0" placeholder="e.g., 250">
-                    </div>
-                    <div class="form-group">
-                        <label>Description & Condition</label>
-                        <textarea id="p-desc" required rows="3" placeholder="Barely used, works perfectly for semester projects..."></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary" style="width: 100%;">Post Product</button>
-                </form>
-            </div>
+        <!-- Dashboards Container -->
+        <div class="container">
             
-            <h3 style="margin-bottom: 1rem;">Your Listed Items</h3>
-            <div id="seller-inventory" class="product-grid"></div>
-        </section>
+            <!-- Seller Dashboard -->
+            <section id="seller-dashboard" class="hidden">
+                <div class="dashboard-header">
+                    <h2>Seller Dashboard</h2>
+                    <p style="color: var(--text-light); margin-top: 0.5rem;">List a new item for sale on campus</p>
+                </div>
 
-        <!-- Buyer Dashboard -->
-        <section id="buyer-dashboard" class="hidden">
-            <div class="dashboard-header">
-                <h2>Campus Marketplace</h2>
-                <p>Find what you need from your seniors</p>
-            </div>
+                <div class="seller-form">
+                    <form id="add-product-form" onsubmit="handleAddProduct(event)">
+                        <div class="form-group">
+                            <label>Product Title</label>
+                            <input type="text" id="p-title" required placeholder="e.g., Breadboard with Jumper Wires">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="p-category">
+                                <option value="Electronics">DIY Electronics</option>
+                                <option value="Microcontrollers">Microcontrollers</option>
+                                <option value="Sensors">Sensors</option>
+                                <option value="Calculators">Calculators</option>
+                                <option value="Books">Books</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Price (₹)</label>
+                            <input type="number" id="p-price" required min="0" placeholder="e.g., 250">
+                        </div>
+                        <div class="form-group">
+                            <label>Description & Condition</label>
+                            <textarea id="p-desc" required rows="3" placeholder="Barely used, works perfectly for semester projects..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;">Post Product to Board</button>
+                    </form>
+                </div>
+                
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Your Active Listings</h3>
+                <div id="seller-inventory" class="product-grid"></div>
+            </section>
 
-            <div class="filters" id="filter-container">
-                <button class="filter-btn active" onclick="filterProducts('All')">All Items</button>
-                <button class="filter-btn" onclick="filterProducts('Calculators')">Calculators</button>
-                <button class="filter-btn" onclick="filterProducts('Microcontrollers')">Microcontrollers</button>
-                <button class="filter-btn" onclick="filterProducts('Sensors')">Sensors</button>
-                <button class="filter-btn" onclick="filterProducts('Books')">Books</button>
-                <button class="filter-btn" onclick="filterProducts('Electronics')">DIY Electronics</button>
-            </div>
+            <!-- Buyer Dashboard -->
+            <section id="buyer-dashboard" class="hidden">
+                <div class="dashboard-header">
+                    <h2>Available Components</h2>
+                    <p style="color: var(--text-light); margin-top: 0.5rem;">Find exactly what you need for your next project</p>
+                </div>
 
-            <div id="buyer-inventory" class="product-grid">
-                <!-- Products injected by JS -->
-            </div>
-        </section>
+                <div class="filters" id="filter-container">
+                    <button class="filter-btn active" onclick="filterProducts('All')">All Items</button>
+                    <button class="filter-btn" onclick="filterProducts('Calculators')">Calculators</button>
+                    <button class="filter-btn" onclick="filterProducts('Microcontrollers')">Microcontrollers</button>
+                    <button class="filter-btn" onclick="filterProducts('Sensors')">Sensors</button>
+                    <button class="filter-btn" onclick="filterProducts('Books')">Books</button>
+                    <button class="filter-btn" onclick="filterProducts('Electronics')">DIY Electronics</button>
+                </div>
+
+                <div id="buyer-inventory" class="product-grid">
+                    <!-- Products injected by JS -->
+                </div>
+            </section>
+        </div>
     </main>
 
     <script>
@@ -329,7 +456,7 @@
                 price: 650,
                 desc: "Great condition. Ideal for complex numbers, polar conversions, and engineering math problems.",
                 emoji: "🖩",
-                seller: "Third Year CS"
+                seller: "Student_ID_104"
             },
             {
                 id: 2,
@@ -338,25 +465,25 @@
                 price: 80,
                 desc: "Spare sensor from a robotics project. Tested and working perfectly for obstacle avoidance.",
                 emoji: "📡",
-                seller: "Second Year IT"
+                seller: "Student_ID_882"
             },
             {
                 id: 3,
                 title: "Engineering Mathematics Vol 1",
                 category: "Books",
                 price: 300,
-                desc: "Slightly highlighted but no torn pages. Crucial for first-year exams.",
+                desc: "Slightly highlighted but no torn pages. Crucial for semester exams.",
                 emoji: "📚",
-                seller: "Second Year Mech"
+                seller: "Student_ID_311"
             },
             {
                 id: 4,
                 title: "Arduino Uno R3 with Cable",
                 category: "Microcontrollers",
                 price: 400,
-                desc: "Original clone. Used for one semester. Comes with the blue USB cable.",
+                desc: "Original clone. Used for one semester. Comes with the blue USB data cable.",
                 emoji: "🔌",
-                seller: "Final Year EXTC"
+                seller: "Student_ID_905"
             }
         ];
 
@@ -375,12 +502,15 @@
             authSection.classList.add('hidden');
             logoutBtn.classList.remove('hidden');
 
+            // Scroll to top upon login
+            window.scrollTo(0, 0);
+
             if (role === 'seller') {
-                userStatus.textContent = "Logged in as: Senior (Seller)";
+                userStatus.textContent = "Active Mode: Seller";
                 sellerDash.classList.remove('hidden');
                 renderProducts(); 
             } else if (role === 'buyer') {
-                userStatus.textContent = "Logged in as: Junior (Buyer)";
+                userStatus.textContent = "Active Mode: Buyer";
                 buyerDash.classList.remove('hidden');
                 renderProducts();
             }
@@ -393,6 +523,7 @@
             sellerDash.classList.add('hidden');
             buyerDash.classList.add('hidden');
             authSection.classList.remove('hidden');
+            window.scrollTo(0, 0);
         }
 
         function getEmojiForCategory(category) {
@@ -421,19 +552,29 @@
                 price: parseInt(price),
                 desc,
                 emoji: getEmojiForCategory(category),
-                seller: "You"
+                seller: "You (My Listing)"
             };
 
-            products.unshift(newProduct); // Add to beginning of array
+            products.unshift(newProduct);
             document.getElementById('add-product-form').reset();
-            alert("Product listed successfully!");
+            
+            // Visual feedback
+            const btn = e.target.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = "✅ Listed Successfully!";
+            btn.style.background = "var(--success)";
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = "";
+            }, 2000);
+
             renderProducts();
         }
 
         function filterProducts(category) {
             activeFilter = category;
             
-            // Update active button styling
             const btns = document.querySelectorAll('.filter-btn');
             btns.forEach(btn => {
                 if(btn.textContent.includes(category) || (category === 'All' && btn.textContent === 'All Items')) {
@@ -447,16 +588,15 @@
         }
 
         function buyProduct(id) {
-            if(confirm("Are you sure you want to purchase this item? The seller will be notified.")) {
-                // In a real app, this would trigger a backend API and payment gateway
+            if(confirm("Confirm purchase? We will notify the seller to meet you on campus.")) {
                 products = products.filter(p => p.id !== id);
-                alert("Purchase request sent to the seller! You can collect it on campus.");
+                alert("Purchase secured! Check your student email for meetup details.");
                 renderProducts();
             }
         }
 
         function deleteProduct(id) {
-            if(confirm("Remove this listing?")) {
+            if(confirm("Permanently remove this listing from the marketplace?")) {
                 products = products.filter(p => p.id !== id);
                 renderProducts();
             }
@@ -468,21 +608,25 @@
             
             let htmlToInject = '';
             
-            // Filter logic for buyer view
             let displayProducts = products;
             if(currentRole === 'buyer' && activeFilter !== 'All') {
                 displayProducts = products.filter(p => p.category === activeFilter);
             }
 
             if(displayProducts.length === 0) {
-                htmlToInject = `<p style="grid-column: 1/-1; text-align: center; color: gray;">No items found in this category.</p>`;
+                htmlToInject = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 4rem 0;">
+                        <span style="font-size: 4rem;">🔍</span>
+                        <h3 style="margin-top: 1rem; color: var(--text-dark);">No items found</h3>
+                        <p style="color: var(--text-light);">Try selecting a different category.</p>
+                    </div>`;
             }
 
             displayProducts.forEach(product => {
                 const isSellerView = currentRole === 'seller';
                 const actionButton = isSellerView 
-                    ? `<button class="btn-outline" style="width:100%; border-color: red; color: red;" onclick="deleteProduct(${product.id})">Remove Listing</button>`
-                    : `<button class="btn-success" onclick="buyProduct(${product.id})">Buy Now</button>`;
+                    ? `<button class="btn-outline" style="width:100%; border-color: #ef4444; color: #ef4444;" onclick="deleteProduct(${product.id})">Delete Listing</button>`
+                    : `<button class="btn-success" onclick="buyProduct(${product.id})">Purchase Item</button>`;
 
                 htmlToInject += `
                     <div class="product-card">
@@ -493,9 +637,9 @@
                             <span class="product-category">${product.category}</span>
                             <h3 class="product-title">${product.title}</h3>
                             <p class="product-desc">${product.desc}</p>
-                            <div class="product-footer" style="margin-bottom: 1rem;">
+                            <div class="product-footer">
                                 <span class="product-price">₹${product.price}</span>
-                                <span style="font-size: 0.8rem; color: gray;">By: ${product.seller}</span>
+                                <span class="seller-badge">${product.seller}</span>
                             </div>
                             ${actionButton}
                         </div>
